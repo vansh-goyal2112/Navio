@@ -306,9 +306,9 @@ export default function RouteResultPage() {
                     className="mt-2 w-full bg-transparent outline-none text-lg font-semibold"
                   >
                     <option value="">Select Destination</option>
-                    <option value="CR1">Class Room 1</option>
-                    <option value="CR2">Class Room 2</option>
-                    <option value="CR3">Class Room 3</option>
+                    <option value="CR1">MB 202</option>
+                    <option value="CR2">MB 207</option>
+                    <option value="CR3">MB 208</option>
                   </select>
                 </div>
 
