@@ -175,10 +175,25 @@
 
 import { useRouter } from "next/navigation";
 import { useNavio } from "../../contexts/NavioContext";
+import { useState } from "react";
+import { mapData } from "@/data/mapData";
+import { dijkstra } from "../utils/dijkstra";
+import MapCanvas from "@/components/MapCanvas";
 
 export default function RouteResultPage() {
+  const [start] = useState("N0"); // fixed start (your red dot)
+  const [end, setEnd] = useState("");
+  const [path, setPath] = useState([]);
   const router = useRouter();
   const { selectedReferencePoint, selectedRoom, selectedSavedClass } = useNavio();
+
+  const handleNavigate = () => {
+    if (!end) return;
+
+    const result = dijkstra(mapData, start, end);
+    setPath(result);
+  };
+
 
   const displayRoom =
     selectedSavedClass?.roomNumber || selectedRoom || "No room selected";
@@ -266,6 +281,62 @@ export default function RouteResultPage() {
             </div>
           </div>
 
+          <div className="space-y-4">
+
+            {/* Card Container */}
+            <div className="rounded-[28px] border border-[#E2E8F0] bg-white p-6 shadow-lg dark:border-[#334155] dark:bg-[#1E293B]">
+
+              {/* Title */}
+              <h2 className="mb-4 text-xl font-bold">
+                Indoor Navigation System
+              </h2>
+
+              {/* Controls */}
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+
+                {/* Dropdown */}
+                <div className="flex-1 rounded-2xl border border-[#E2E8F0] bg-[#F8FAFC] p-3 dark:border-[#334155] dark:bg-[#0F172A]">
+                  <p className="text-sm font-semibold text-[#0B5FFF] dark:text-blue-300">
+                    Destination
+                  </p>
+
+                  <select
+                    value={end}
+                    onChange={(e) => setEnd(e.target.value)}
+                    className="mt-2 w-full bg-transparent outline-none text-lg font-semibold"
+                  >
+                    <option value="">Select Destination</option>
+                    <option value="CR1">Class Room 1</option>
+                    <option value="CR2">Class Room 2</option>
+                    <option value="CR3">Class Room 3</option>
+                  </select>
+                </div>
+
+                {/* Button */}
+                <button
+                  onClick={handleNavigate}
+                  className="rounded-2xl bg-[#0B5FFF] px-6 py-3 font-semibold text-white shadow-md transition hover:opacity-90 active:scale-95"
+                >
+                  Navigate
+                </button>
+              </div>
+            </div>
+
+            {/* Map Card */}
+            <div className="rounded-[28px] border border-[#E2E8F0] bg-white p-4 shadow-lg dark:border-[#334155] dark:bg-[#1E293B]">
+
+              <p className="mb-3 text-sm font-semibold text-[#0B5FFF] dark:text-blue-300">
+                Map View
+              </p>
+
+              <MapCanvas
+                nodes={mapData.nodes}
+                edges={mapData.edges}
+                path={path}
+              />
+            </div>
+
+          </div>
           {/* ACTION BUTTONS */}
           <div className="grid gap-3 sm:grid-cols-2">
             <button
