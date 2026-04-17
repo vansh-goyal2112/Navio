@@ -26,20 +26,20 @@ export function ThemeContextProvider({ children }) {
    * - Applies theme to document root
    */
   useEffect(() => {
+  const savedTheme = localStorage.getItem("navio-theme");
 
-    // Get saved theme preference
-    const savedTheme = localStorage.getItem("navio-theme");
-
-    if (savedTheme === "dark") {
-      // Apply dark mode
-      setDarkMode(true);
-      document.documentElement.classList.add("dark");
-    } else {
-      // Default to light mode
-      setDarkMode(false);
-      document.documentElement.classList.remove("dark");
-    }
-  }, []);
+  if (savedTheme === "dark") {
+    setDarkMode(true);
+    document.documentElement.classList.add("dark");
+  } else if (savedTheme === "light") {
+    setDarkMode(false);
+    document.documentElement.classList.remove("dark");
+  } else {
+    // No saved preference — check if dark class already on html
+    const isDark = document.documentElement.classList.contains("dark");
+    setDarkMode(isDark);
+  }
+}, []);
 
   /**
    * toggleDarkMode
