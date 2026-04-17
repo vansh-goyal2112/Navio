@@ -1,180 +1,43 @@
-// "use client";
+"use client"; // Enables client-side rendering for this page in Next.js
 
-// import Link from "next/link";
-// import { useUserAuth } from "../../contexts/AuthContext";
-
-// export default function DashboardPage() {
-//   const { user } = useUserAuth();
-
-//   if (user === null) {
-//     return (
-//       <main className="min-h-screen bg-gray-100 px-10 py-10 text-center text-black dark:bg-slate-700 dark:text-white">
-//         <div className="mx-auto max-w-md rounded-xl border-2 border-teal-500 bg-white p-8 shadow-md dark:bg-slate-800">
-//           <h1 className="mb-4 text-3xl font-bold">Access Denied</h1>
-//           <p>You must be logged in to view your dashboard.</p>
-//         </div>
-//       </main>
-//     );
-//   }
-
-//   return (
-//     <main className="min-h-screen bg-gray-100 px-6 py-10 text-black dark:bg-slate-700 dark:text-white">
-//       <h1 className="mb-8 text-center text-4xl font-bold">Navio Dashboard</h1>
-
-//       <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-2">
-//         <Link
-//           href="/search-room"
-//           className="rounded-xl border-2 border-teal-500 bg-white p-8 shadow-md transition hover:shadow-lg dark:bg-slate-800"
-//         >
-//           <h2 className="mb-3 text-2xl font-bold">Search a Room</h2>
-//           <p className="text-slate-700 dark:text-slate-200">
-//             Search for a classroom by room number after scanning your reference point.
-//           </p>
-//         </Link>
-
-//         <Link
-//           href="/saved-classes"
-//           className="rounded-xl border-2 border-teal-500 bg-white p-8 shadow-md transition hover:shadow-lg dark:bg-slate-800"
-//         >
-//           <h2 className="mb-3 text-2xl font-bold">Saved Classes</h2>
-//           <p className="text-slate-700 dark:text-slate-200">
-//             View and use your saved semester classroom list.
-//           </p>
-//         </Link>
-
-//         <Link
-//           href="/add-class"
-//           className="rounded-xl border-2 border-teal-500 bg-white p-8 shadow-md transition hover:shadow-lg dark:bg-slate-800"
-//         >
-//           <h2 className="mb-3 text-2xl font-bold">Add Class</h2>
-//           <p className="text-slate-700 dark:text-slate-200">
-//             Save a classroom with building name, room number, and schedule.
-//           </p>
-//         </Link>
-
-//         <Link
-//           href="/scan"
-//           className="rounded-xl border-2 border-pink-500 bg-white p-8 shadow-md transition hover:shadow-lg dark:bg-slate-800"
-//         >
-//           <h2 className="mb-3 text-2xl font-bold">Scan Reference Point</h2>
-//           <p className="text-slate-700 dark:text-slate-200">
-//             Open the QR scanner and identify your current reference point.
-//           </p>
-//         </Link>
-//       </div>
-//     </main>
-//   );
-// }
-
-
-
-
-
-
-// "use client";
-
-// import Link from "next/link";
-// import { useUserAuth } from "../../contexts/AuthContext";
-
-// export default function DashboardPage() {
-//   const { user } = useUserAuth();
-
-//   if (user === null) {
-//     return (
-//       <main className="min-h-screen bg-gray-100 px-10 py-10 text-center text-black dark:bg-slate-700 dark:text-white">
-//         <div className="mx-auto max-w-md rounded-xl border-2 border-teal-500 bg-white p-8 shadow-md dark:bg-slate-800">
-//           <h1 className="mb-4 text-3xl font-bold">Access Denied</h1>
-//           <p>You must be logged in to view your dashboard.</p>
-//         </div>
-//       </main>
-//     );
-//   }
-
-//   return (
-//     <main className="min-h-screen bg-gray-100 px-6 py-10 text-black dark:bg-slate-700 dark:text-white">
-//       <h1 className="mb-8 text-center text-4xl font-bold">Navio Dashboard</h1>
-
-//       <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-2">
-//         <Link
-//           href="/search-room"
-//           className="rounded-xl border-2 border-teal-500 bg-white p-8 shadow-md transition hover:shadow-lg dark:bg-slate-800"
-//         >
-//           <h2 className="mb-3 text-2xl font-bold">Search a Room</h2>
-//           <p className="text-slate-700 dark:text-slate-200">
-//             Search for a classroom by room number after scanning your reference point.
-//           </p>
-//         </Link>
-
-//         <Link
-//           href="/saved-classes"
-//           className="rounded-xl border-2 border-teal-500 bg-white p-8 shadow-md transition hover:shadow-lg dark:bg-slate-800"
-//         >
-//           <h2 className="mb-3 text-2xl font-bold">Saved Classes</h2>
-//           <p className="text-slate-700 dark:text-slate-200">
-//             View and use your saved semester classroom list.
-//           </p>
-//         </Link>
-
-//         <Link
-//           href="/add-class"
-//           className="rounded-xl border-2 border-teal-500 bg-white p-8 shadow-md transition hover:shadow-lg dark:bg-slate-800"
-//         >
-//           <h2 className="mb-3 text-2xl font-bold">Add Class</h2>
-//           <p className="text-slate-700 dark:text-slate-200">
-//             Save a classroom with building name, room number, and schedule.
-//           </p>
-//         </Link>
-
-//         <Link
-//           href="/scan"
-//           className="rounded-xl border-2 border-pink-500 bg-white p-8 shadow-md transition hover:shadow-lg dark:bg-slate-800"
-//         >
-//           <h2 className="mb-3 text-2xl font-bold">Scan Reference Point</h2>
-//           <p className="text-slate-700 dark:text-slate-200">
-//             Open the QR scanner and identify your current reference point.
-//           </p>
-//         </Link>
-
-//         <Link
-//           href="/profile"
-//           className="rounded-xl border-2 border-teal-500 bg-white p-8 shadow-md transition hover:shadow-lg dark:bg-slate-800"
-//         >
-//           <h2 className="mb-3 text-2xl font-bold">Profile</h2>
-//           <p className="text-slate-700 dark:text-slate-200">
-//             View your account details.
-//           </p>
-//         </Link>
-
-//         <Link
-//           href="/settings"
-//           className="rounded-xl border-2 border-teal-500 bg-white p-8 shadow-md transition hover:shadow-lg dark:bg-slate-800"
-//         >
-//           <h2 className="mb-3 text-2xl font-bold">Settings</h2>
-//           <p className="text-slate-700 dark:text-slate-200">
-//             Change dark mode and manage your account.
-//           </p>
-//         </Link>
-//       </div>
-//     </main>
-//   );
-// }
-
-
-
-"use client";
-
+// Import Link for client-side navigation between pages
 import Link from "next/link";
+
+// Import authentication context to get current logged-in user
 import { useUserAuth } from "../../contexts/AuthContext";
 
+/**
+ * DashboardPage Component
+ * --------------------------------------------------
+ * Purpose:
+ * - Acts as the main landing page after login
+ * - Provides navigation to all major features of Navio
+ * - Restricts access if user is not authenticated
+ */
 export default function DashboardPage() {
+
+  // Get current authenticated user from context
   const { user } = useUserAuth();
 
+  /**
+   * Access Control
+   * --------------------------------------------------
+   * If user is not logged in:
+   * - Show "Access Denied" UI
+   * - Prevent access to dashboard features
+   */
   if (user === null) {
     return (
       <main className="flex items-center justify-center py-16">
         <div className="w-full max-w-md rounded-3xl border border-[#E2E8F0] bg-white p-10 text-center shadow-xl dark:border-[#334155] dark:bg-[#1E293B]">
+          
+          {/* Warning Icon */}
           <div className="mb-5 text-4xl">🚫</div>
+
+          {/* Heading */}
           <h1 className="mb-3 text-3xl font-bold">Access Denied</h1>
+
+          {/* Message */}
           <p className="text-[#475569] dark:text-slate-300">
             You must be logged in to view your dashboard.
           </p>
@@ -183,20 +46,32 @@ export default function DashboardPage() {
     );
   }
 
+  /**
+   * Main Dashboard UI (Authenticated Users Only)
+   * --------------------------------------------------
+   * Sections:
+   * 1. Hero section (intro + purpose of app)
+   * 2. Action cards (navigation to key features)
+   */
   return (
     <main className="space-y-10">
       
       {/* HERO SECTION */}
+      {/* Displays app introduction and purpose */}
       <section className="rounded-[28px] border border-[#E2E8F0] bg-white p-8 shadow-lg dark:border-[#334155] dark:bg-[#1E293B]">
         <div className="flex flex-col gap-4">
+
+          {/* Label / Tag */}
           <span className="inline-block w-fit rounded-full bg-blue-50 px-4 py-1 text-xs font-semibold tracking-widest text-[#0B5FFF] dark:bg-blue-500/10 dark:text-blue-300">
             DASHBOARD
           </span>
 
+          {/* Main Heading */}
           <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
             Welcome to Navio
           </h1>
 
+          {/* Description */}
           <p className="max-w-2xl text-[#475569] dark:text-slate-300">
             Navigate your campus efficiently. Scan reference points, search classrooms,
             and manage your semester schedule — all in one place.
@@ -204,10 +79,12 @@ export default function DashboardPage() {
         </div>
       </section>
 
-      {/* ACTION CARDS */}
+      {/* ACTION CARDS SECTION */}
+      {/* Provides quick navigation to core features */}
       <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         
-        {/* CARD */}
+        {/* SEARCH ROOM CARD */}
+        {/* Navigates user to room search functionality */}
         <Link
           href="/search-room"
           className="group rounded-3xl border border-[#E2E8F0] bg-white p-6 shadow-md transition hover:-translate-y-1 hover:shadow-xl dark:border-[#334155] dark:bg-[#1E293B]"
@@ -223,7 +100,8 @@ export default function DashboardPage() {
           </p>
         </Link>
 
-        {/* CARD */}
+        {/* SAVED CLASSES CARD */}
+        {/* Navigates to user's stored classroom data */}
         <Link
           href="/saved-classes"
           className="group rounded-3xl border border-[#E2E8F0] bg-white p-6 shadow-md transition hover:-translate-y-1 hover:shadow-xl dark:border-[#334155] dark:bg-[#1E293B]"
@@ -239,7 +117,8 @@ export default function DashboardPage() {
           </p>
         </Link>
 
-        {/* CARD */}
+        {/* ADD CLASS CARD */}
+        {/* Navigates to form to add new class */}
         <Link
           href="/add-class"
           className="group rounded-3xl border border-[#E2E8F0] bg-white p-6 shadow-md transition hover:-translate-y-1 hover:shadow-xl dark:border-[#334155] dark:bg-[#1E293B]"
@@ -255,7 +134,8 @@ export default function DashboardPage() {
           </p>
         </Link>
 
-        {/* CARD */}
+        {/* SCAN CARD */}
+        {/* Opens QR scanning functionality for location detection */}
         <Link
           href="/scan"
           className="group rounded-3xl border border-[#E2E8F0] bg-white p-6 shadow-md transition hover:-translate-y-1 hover:shadow-xl dark:border-[#334155] dark:bg-[#1E293B]"
@@ -271,7 +151,8 @@ export default function DashboardPage() {
           </p>
         </Link>
 
-        {/* CARD */}
+        {/* PROFILE CARD */}
+        {/* Navigates to user account details */}
         <Link
           href="/profile"
           className="group rounded-3xl border border-[#E2E8F0] bg-white p-6 shadow-md transition hover:-translate-y-1 hover:shadow-xl dark:border-[#334155] dark:bg-[#1E293B]"
@@ -287,7 +168,8 @@ export default function DashboardPage() {
           </p>
         </Link>
 
-        {/* CARD */}
+        {/* SETTINGS CARD */}
+        {/* Navigates to app/user settings */}
         <Link
           href="/settings"
           className="group rounded-3xl border border-[#E2E8F0] bg-white p-6 shadow-md transition hover:-translate-y-1 hover:shadow-xl dark:border-[#334155] dark:bg-[#1E293B]"

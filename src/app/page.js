@@ -1,292 +1,32 @@
-// import Link from "next/link";
+"use client"; // Enables client-side rendering for this page
 
-// export default function Home() {
-//   return (
-//     <div className="flex min-h-screen items-center justify-center bg-zinc-50 px-6">
-//       <main className="flex w-full max-w-3xl flex-col items-center justify-center gap-8 rounded-2xl bg-white px-10 py-20 shadow-sm">
-//         <h1 className="text-4xl font-bold text-black">
-//           Navio Indoor Navigation
-//         </h1>
-
-//         <p className="text-center text-lg text-zinc-600">
-//           Scan QR codes to detect your indoor reference point and view it on the map.
-//         </p>
-
-//         <Link
-//           href="/scan"
-//           className="rounded-xl bg-black px-6 py-3 text-white transition hover:opacity-90"
-//         >
-//           Start Scanning
-//         </Link>
-//       </main>
-//     </div>
-//   );
-// }
-
-
-// "use client";
-
-// import Link from "next/link";
-// import { useUserAuth } from "../contexts/AuthContext";
-// import NavioHomeCard from "../components/NavioHomeCard";
-
-// export default function HomePage() {
-//   const { user, googleSignIn, gitHubSignIn, firebaseSignOut } = useUserAuth();
-
-//   const handleGoogleLogin = async () => {
-//     try {
-//       await googleSignIn();
-//     } catch (error) {
-//       console.error("Google Login Error:", error);
-//     }
-//   };
-
-//   const handleGitHubLogin = async () => {
-//     try {
-//       await gitHubSignIn();
-//     } catch (error) {
-//       console.error("GitHub Login Error:", error);
-//     }
-//   };
-
-//   const handleLogout = async () => {
-//     try {
-//       await firebaseSignOut();
-//     } catch (error) {
-//       console.error("Logout Error:", error);
-//     }
-//   };
-
-//   return (
-//     <main className="min-h-screen bg-gray-100 px-6 py-10 text-center text-black dark:bg-slate-700 dark:text-white">
-//       <h1 className="mb-4 text-4xl font-bold">Navio</h1>
-
-//       <p className="mx-auto mb-10 max-w-2xl text-lg text-slate-700 dark:text-slate-200">
-//         Indoor campus navigation for students. Scan your reference point, search
-//         your classroom, and continue to the guided path flow.
-//       </p>
-
-//       {!user && (
-//         <div className="mx-auto mb-10 max-w-md rounded-xl border-2 border-teal-500 bg-white p-8 shadow-md dark:bg-slate-800">
-//           <p className="mb-6 text-lg">Please login to save and manage classes.</p>
-
-//           <div className="flex flex-col items-center gap-4">
-//             <button
-//               onClick={handleGoogleLogin}
-//               className="w-full rounded-md border-2 border-teal-500 bg-gray-100 px-6 py-2 font-semibold text-black transition hover:bg-gray-300 dark:bg-slate-700 dark:text-white dark:hover:bg-slate-600"
-//             >
-//               Login with Google
-//             </button>
-
-//             <button
-//               onClick={handleGitHubLogin}
-//               className="w-full rounded-md border-2 border-teal-500 bg-gray-100 px-6 py-2 font-semibold text-black transition hover:bg-gray-300 dark:bg-slate-700 dark:text-white dark:hover:bg-slate-600"
-//             >
-//               Login with GitHub
-//             </button>
-
-//             <Link
-//               href="/scan"
-//               className="w-full rounded-md border-2 border-pink-500 bg-pink-100 px-6 py-2 font-semibold text-black transition hover:bg-pink-200 dark:bg-pink-900 dark:text-white dark:hover:bg-pink-800"
-//             >
-//               Continue as New Student
-//             </Link>
-//           </div>
-//         </div>
-//       )}
-
-//       {user && (
-//         <div className="mx-auto mb-10 max-w-xl rounded-xl border-2 border-teal-500 bg-white p-8 shadow-md dark:bg-slate-800">
-//           <p className="mb-6 text-lg">
-//             Welcome, {user.displayName} ({user.email})
-//           </p>
-
-//           <div className="flex flex-col items-center gap-4">
-//             <Link
-//               href="/dashboard"
-//               className="w-full max-w-xs rounded-md border-2 border-teal-500 bg-gray-100 px-6 py-2 font-semibold text-black transition hover:bg-gray-300 dark:bg-slate-700 dark:text-white dark:hover:bg-slate-600"
-//             >
-//               Go to Dashboard
-//             </Link>
-
-//             <Link
-//               href="/profile"
-//               className="w-full max-w-xs rounded-md border-2 border-teal-500 bg-gray-100 px-6 py-2 font-semibold text-black transition hover:bg-gray-300 dark:bg-slate-700 dark:text-white dark:hover:bg-slate-600"
-//             >
-//               Profile Page
-//             </Link>
-
-//             <button
-//               onClick={handleLogout}
-//               className="w-full max-w-xs rounded-md border-2 border-teal-500 bg-gray-100 px-6 py-2 font-semibold text-black transition hover:bg-gray-300 dark:bg-slate-700 dark:text-white dark:hover:bg-slate-600"
-//             >
-//               Logout
-//             </button>
-//           </div>
-//         </div>
-//       )}
-
-//       <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-3">
-//         <NavioHomeCard
-//           title="Scan Reference Point"
-//           text="Students can scan a QR checkpoint to identify their current indoor starting location."
-//         />
-
-//         <NavioHomeCard
-//           title="Search Classroom"
-//           text="Students can enter a room number and check if that classroom exists in Firebase."
-//         />
-
-//         <NavioHomeCard
-//           title="Save Semester Classes"
-//           text="Logged-in students can store classroom cards for quick access during the semester."
-//         />
-//       </div>
-//     </main>
-//   );
-// }
-
-
-
-
-// "use client";
-
-// import Link from "next/link";
-// import { useUserAuth } from "../contexts/AuthContext";
-// import NavioHomeCard from "../components/NavioHomeCard";
-
-// export default function HomePage() {
-//   const { user, googleSignIn, gitHubSignIn, firebaseSignOut } = useUserAuth();
-
-//   const handleGoogleLogin = async () => {
-//     try {
-//       await googleSignIn();
-//     } catch (error) {
-//       console.error("Google Login Error:", error);
-//     }
-//   };
-
-//   const handleGitHubLogin = async () => {
-//     try {
-//       await gitHubSignIn();
-//     } catch (error) {
-//       console.error("GitHub Login Error:", error);
-//     }
-//   };
-
-//   const handleLogout = async () => {
-//     try {
-//       await firebaseSignOut();
-//     } catch (error) {
-//       console.error("Logout Error:", error);
-//     }
-//   };
-
-//   return (
-//     <main className="min-h-screen bg-gray-100 px-6 py-10 text-center text-black dark:bg-slate-700 dark:text-white">
-//       <h1 className="mb-4 text-4xl font-bold">Navio</h1>
-
-//       <p className="mx-auto mb-10 max-w-2xl text-lg text-slate-700 dark:text-slate-200">
-//         Indoor campus navigation for students. Scan your reference point, search
-//         your classroom, and continue to the guided path flow.
-//       </p>
-
-//       {!user && (
-//         <div className="mx-auto mb-10 max-w-md rounded-xl border-2 border-teal-500 bg-white p-8 shadow-md dark:bg-slate-800">
-//           <p className="mb-6 text-lg">Please login to save and manage classes.</p>
-
-//           <div className="flex flex-col items-center gap-4">
-//             <button
-//               onClick={handleGoogleLogin}
-//               className="w-full rounded-md border-2 border-teal-500 bg-gray-100 px-6 py-2 font-semibold text-black transition hover:bg-gray-300 dark:bg-slate-700 dark:text-white dark:hover:bg-slate-600"
-//             >
-//               Login with Google
-//             </button>
-
-//             <button
-//               onClick={handleGitHubLogin}
-//               className="w-full rounded-md border-2 border-teal-500 bg-gray-100 px-6 py-2 font-semibold text-black transition hover:bg-gray-300 dark:bg-slate-700 dark:text-white dark:hover:bg-slate-600"
-//             >
-//               Login with GitHub
-//             </button>
-
-//             <Link
-//               href="/scan"
-//               className="w-full rounded-md border-2 border-pink-500 bg-pink-100 px-6 py-2 font-semibold text-black transition hover:bg-pink-200 dark:bg-pink-900 dark:text-white dark:hover:bg-pink-800"
-//             >
-//               Continue as New Student
-//             </Link>
-//           </div>
-//         </div>
-//       )}
-
-//       {user && (
-//         <div className="mx-auto mb-10 max-w-xl rounded-xl border-2 border-teal-500 bg-white p-8 shadow-md dark:bg-slate-800">
-//           <p className="mb-6 text-lg">
-//             Welcome, {user.displayName} ({user.email})
-//           </p>
-
-//           <div className="flex flex-col items-center gap-4">
-//             <Link
-//               href="/dashboard"
-//               className="w-full max-w-xs rounded-md border-2 border-teal-500 bg-gray-100 px-6 py-2 font-semibold text-black transition hover:bg-gray-300 dark:bg-slate-700 dark:text-white dark:hover:bg-slate-600"
-//             >
-//               Go to Dashboard
-//             </Link>
-
-//             <Link
-//               href="/profile"
-//               className="w-full max-w-xs rounded-md border-2 border-teal-500 bg-gray-100 px-6 py-2 font-semibold text-black transition hover:bg-gray-300 dark:bg-slate-700 dark:text-white dark:hover:bg-slate-600"
-//             >
-//               Profile Page
-//             </Link>
-
-//             <Link
-//               href="/settings"
-//               className="w-full max-w-xs rounded-md border-2 border-teal-500 bg-gray-100 px-6 py-2 font-semibold text-black transition hover:bg-gray-300 dark:bg-slate-700 dark:text-white dark:hover:bg-slate-600"
-//             >
-//               Settings
-//             </Link>
-
-//             <button
-//               onClick={handleLogout}
-//               className="w-full max-w-xs rounded-md border-2 border-teal-500 bg-gray-100 px-6 py-2 font-semibold text-black transition hover:bg-gray-300 dark:bg-slate-700 dark:text-white dark:hover:bg-slate-600"
-//             >
-//               Logout
-//             </button>
-//           </div>
-//         </div>
-//       )}
-
-//       <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-3">
-//         <NavioHomeCard
-//           title="Scan Reference Point"
-//           text="Students can scan a QR checkpoint to identify their current indoor starting location."
-//         />
-
-//         <NavioHomeCard
-//           title="Search Classroom"
-//           text="Students can enter a room number and check if that classroom exists in Firebase."
-//         />
-
-//         <NavioHomeCard
-//           title="Save Semester Classes"
-//           text="Logged-in students can store classroom cards for quick access during the semester."
-//         />
-//       </div>
-//     </main>
-//   );
-// }
-
-"use client";
-
+// Link is used for client-side navigation between pages
 import Link from "next/link";
+
+// Custom auth context provides current user state and auth actions
 import { useUserAuth } from "../contexts/AuthContext";
+
+// Reusable card component used at the bottom feature section
 import NavioHomeCard from "../components/NavioHomeCard";
 
+/**
+ * HomePage
+ * --------------------------------------------------
+ * Main landing page of the Navio application.
+ * This page:
+ * - introduces the app
+ * - allows scanning/search entry points
+ * - supports Google/GitHub login
+ * - shows different UI for guest users and logged-in users
+ */
 export default function HomePage() {
+  // Extract current user and authentication helper functions from context
   const { user, googleSignIn, gitHubSignIn, firebaseSignOut } = useUserAuth();
 
+  /**
+   * Handles Google login flow.
+   * If login fails, the error is logged for debugging.
+   */
   const handleGoogleLogin = async () => {
     try {
       await googleSignIn();
@@ -295,6 +35,10 @@ export default function HomePage() {
     }
   };
 
+  /**
+   * Handles GitHub login flow.
+   * If login fails, the error is logged for debugging.
+   */
   const handleGitHubLogin = async () => {
     try {
       await gitHubSignIn();
@@ -303,6 +47,10 @@ export default function HomePage() {
     }
   };
 
+  /**
+   * Handles logout flow for the current authenticated user.
+   * If logout fails, the error is logged for debugging.
+   */
   const handleLogout = async () => {
     try {
       await firebaseSignOut();
@@ -313,8 +61,13 @@ export default function HomePage() {
 
   return (
     <main className="space-y-10">
+      {/* Hero section:
+          Introduces the product, highlights main value,
+          and gives users direct action buttons to begin navigation flow. */}
       <section className="overflow-hidden rounded-[32px] border border-[#E2E8F0] bg-white shadow-lg dark:border-[#334155] dark:bg-[#1E293B]">
         <div className="grid gap-10 px-6 py-10 lg:grid-cols-[1.2fr_0.8fr] lg:px-10 lg:py-14">
+          {/* Left side hero content:
+              branding, title, description, CTA buttons, and feature tags */}
           <div className="text-left">
             <span className="inline-block rounded-full bg-blue-50 px-4 py-1 text-xs font-semibold tracking-[0.2em] text-[#0B5FFF] dark:bg-blue-500/10 dark:text-blue-300">
               NAVIO
@@ -330,6 +83,7 @@ export default function HomePage() {
               for students.
             </p>
 
+            {/* Primary entry actions for the user */}
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
                 href="/scan"
@@ -346,6 +100,7 @@ export default function HomePage() {
               </Link>
             </div>
 
+            {/* Quick feature highlights */}
             <div className="mt-8 flex flex-wrap gap-3">
               <span className="rounded-full border border-blue-100 bg-blue-50 px-4 py-2 text-sm font-medium text-[#0B5FFF] dark:border-blue-400/20 dark:bg-blue-500/10 dark:text-blue-300">
                 QR Reference Scanning
@@ -359,6 +114,8 @@ export default function HomePage() {
             </div>
           </div>
 
+          {/* Right side hero panel:
+              shows a simplified preview of the student navigation workflow */}
           <div className="flex items-center">
             <div className="w-full rounded-[28px] border border-[#E2E8F0] bg-[#F8FAFC] p-6 shadow-inner dark:border-[#334155] dark:bg-[#0F172A]">
               <div className="mb-6 flex items-center justify-between">
@@ -376,6 +133,7 @@ export default function HomePage() {
                 </div>
               </div>
 
+              {/* Step-by-step explanation of how Navio works */}
               <div className="space-y-4">
                 <div className="rounded-2xl border border-blue-100 bg-white p-4 dark:border-blue-400/20 dark:bg-[#1E293B]">
                   <p className="text-sm font-semibold text-[#0B5FFF] dark:text-blue-300">
@@ -409,8 +167,13 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Guest user section:
+          Only displayed when the user is not logged in.
+          Encourages sign-in and explains benefits of using Navio. */}
       {!user && (
         <section className="grid gap-6 lg:grid-cols-[1fr_0.9fr]">
+          {/* Left guest panel:
+              authentication actions and guest continuation option */}
           <div className="rounded-[28px] border border-[#E2E8F0] bg-white p-8 shadow-lg dark:border-[#334155] dark:bg-[#1E293B]">
             <h2 className="text-2xl font-bold tracking-tight text-[#0F172A] dark:text-white">
               Get started with Navio
@@ -420,6 +183,7 @@ export default function HomePage() {
               and use protected navigation features.
             </p>
 
+            {/* Login and guest entry buttons */}
             <div className="mt-6 flex flex-col gap-4">
               <button
                 onClick={handleGoogleLogin}
@@ -444,6 +208,8 @@ export default function HomePage() {
             </div>
           </div>
 
+          {/* Right guest panel:
+              explains the advantages and purpose of the app */}
           <div className="rounded-[28px] border border-[#E2E8F0] bg-white p-8 shadow-lg dark:border-[#334155] dark:bg-[#1E293B]">
             <h2 className="text-2xl font-bold tracking-tight text-[#0F172A] dark:text-white">
               Why use Navio?
@@ -481,8 +247,13 @@ export default function HomePage() {
         </section>
       )}
 
+      {/* Authenticated user section:
+          Only displayed when the user is logged in.
+          Gives personalized access to dashboard and shortcuts. */}
       {user && (
         <section className="grid gap-6 lg:grid-cols-[1fr_0.9fr]">
+          {/* Left logged-in panel:
+              user greeting, dashboard navigation, profile/settings/logout */}
           <div className="rounded-[28px] border border-[#E2E8F0] bg-white p-8 shadow-lg dark:border-[#334155] dark:bg-[#1E293B]">
             <h2 className="text-2xl font-bold tracking-tight text-[#0F172A] dark:text-white">
               Welcome back
@@ -492,6 +263,7 @@ export default function HomePage() {
               {user.displayName} ({user.email})
             </p>
 
+            {/* Main account action buttons */}
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
               <Link
                 href="/dashboard"
@@ -523,6 +295,8 @@ export default function HomePage() {
             </div>
           </div>
 
+          {/* Right logged-in panel:
+              provides quick access links to common student actions */}
           <div className="rounded-[28px] border border-[#E2E8F0] bg-white p-8 shadow-lg dark:border-[#334155] dark:bg-[#1E293B]">
             <h2 className="text-2xl font-bold tracking-tight text-[#0F172A] dark:text-white">
               Quick access
@@ -569,6 +343,8 @@ export default function HomePage() {
         </section>
       )}
 
+      {/* Final feature highlight section:
+          uses reusable cards to summarize Navio's core functionalities */}
       <section className="grid gap-6 md:grid-cols-3">
         <NavioHomeCard
           title="Scan Reference Point"

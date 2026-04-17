@@ -1,9 +1,23 @@
-"use client";
+"use client"; // Enables client-side rendering (needed for form + Firebase calls)
 
+// React hooks for state and lifecycle management
 import { useEffect, useState } from "react";
-import { getBuildings } from "../services/navio-service";
 
+// Service functions to interact with Firestore
+import { getBuildings, findRoomByNumber } from "../services/navio-service";
+
+/**
+ * SavedClassForm Component
+ * --------------------------------------------------
+ * Handles:
+ * - Fetching buildings from Firebase
+ * - Taking user input for class details
+ * - Validating room existence
+ * - Saving valid class data
+ */
 export default function SavedClassForm({ onAddClass }) {
+
+  // Initial state for form fields
   const initialState = {
     building: "",
     roomNumber: "",
@@ -11,14 +25,31 @@ export default function SavedClassForm({ onAddClass }) {
     time: "",
   };
 
+  // State to store form values
   const [classItem, setClassItem] = useState(initialState);
+
+  // State to store buildings from Firebase
   const [buildings, setBuildings] = useState([]);
 
+  // State to store error messages
+  const [error, setError] = useState("");
+
+  // State to show loading while saving
+  const [isSaving, setIsSaving] = useState(false);
+
+  /**
+   * Load buildings on component mount
+   */
   useEffect(() => {
     async function loadBuildings() {
+
+      // Fetch buildings from backend
       const data = await getBuildings();
+
+      // Save buildings to state
       setBuildings(data);
 
+      // Set default building (first item)
       if (data.length > 0) {
         setClassItem((prev) => ({
           ...prev,
@@ -30,35 +61,87 @@ export default function SavedClassForm({ onAddClass }) {
     loadBuildings();
   }, []);
 
+  /**
+   * Handle input changes
+   */
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    setError(""); // Clear error on input change
+
+    // Update corresponding field
     setClassItem((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  /**
+   * Handle form submission
+   */
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent page reload
 
-    const newClass = {
-      ...classItem,
-      roomNumber: classItem.roomNumber.trim().toUpperCase(),
-    };
+    setError("");
+    setIsSaving(true); // Enable loading state
 
-    onAddClass(newClass);
-    setClassItem((prev) => ({
-      ...initialState,
-      building: prev.building || "",
-    }));
+    try {
+      // Clean room number input
+      const cleanedRoomNumber = classItem.roomNumber.trim().toUpperCase();
+
+      // Validate room using backend
+      const matchedRoom = await findRoomByNumber(cleanedRoomNumber);
+
+      // Debug logs
+      console.log("Entered room number:", cleanedRoomNumber);
+      console.log("Matched room:", matchedRoom);
+
+      // If room does not exist → show error
+      if (!matchedRoom) {
+        setError("This classroom does not exist in the database.");
+        setIsSaving(false);
+        return;
+      }
+
+      // Prepare new class object
+      const newClass = {
+        ...classItem,
+        roomNumber: cleanedRoomNumber,
+      };
+
+      // Send data to parent component
+      await onAddClass(newClass);
+
+      // Reset form but keep selected building
+      setClassItem((prev) => ({
+        ...initialState,
+        building: prev.building || "",
+      }));
+
+    } catch (err) {
+
+      // Handle unexpected errors
+      console.error("Save class validation error:", err);
+      setError("Something went wrong while validating the classroom.");
+
+    } finally {
+
+      // Stop loading state
+      setIsSaving(false);
+    }
   };
 
   return (
+    // Form container
     <div className="mx-auto w-full max-w-xl">
+
+      {/* Main Form */}
       <form
         onSubmit={handleSubmit}
         className="space-y-6 rounded-[28px] border border-[#E2E8F0] bg-white p-6 shadow-lg dark:border-[#334155] dark:bg-[#1E293B] sm:p-8"
       >
+
+        {/* Header Section */}
         <div>
           <span className="inline-block rounded-full bg-blue-50 px-4 py-1 text-xs font-semibold tracking-[0.2em] text-[#0B5FFF] dark:bg-blue-500/10 dark:text-blue-300">
             SAVE CLASS
@@ -74,7 +157,10 @@ export default function SavedClassForm({ onAddClass }) {
           </p>
         </div>
 
+        {/* Form Fields */}
         <div className="space-y-5">
+
+          {/* Building Dropdown */}
           <div className="space-y-2">
             <label
               htmlFor="building"
@@ -92,6 +178,7 @@ export default function SavedClassForm({ onAddClass }) {
                 required
                 className="h-12 w-full rounded-xl bg-transparent px-3 text-base font-medium text-[#0F172A] outline-none dark:text-white"
               >
+                {/* Populate buildings dynamically */}
                 {buildings.map((building) => (
                   <option key={building.id} value={building.name}>
                     {building.name}
@@ -101,6 +188,7 @@ export default function SavedClassForm({ onAddClass }) {
             </div>
           </div>
 
+          {/* Room Input */}
           <div className="space-y-2">
             <label
               htmlFor="roomNumber"
@@ -123,7 +211,10 @@ export default function SavedClassForm({ onAddClass }) {
             </div>
           </div>
 
+          {/* Day + Time Inputs */}
           <div className="grid gap-5 sm:grid-cols-2">
+
+            {/* Day Input */}
             <div className="space-y-2">
               <label
                 htmlFor="day"
@@ -146,6 +237,7 @@ export default function SavedClassForm({ onAddClass }) {
               </div>
             </div>
 
+            {/* Time Input */}
             <div className="space-y-2">
               <label
                 htmlFor="time"
@@ -170,16 +262,28 @@ export default function SavedClassForm({ onAddClass }) {
           </div>
         </div>
 
+        {/* Error Message */}
+        {error && (
+          <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-400/20 dark:bg-red-500/10 dark:text-red-300">
+            {error}
+          </div>
+        )}
+
+        {/* Action Section */}
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+
+          {/* Submit Button */}
           <button
             type="submit"
-            className="w-full rounded-2xl bg-[#0B5FFF] px-6 py-3 font-semibold text-white shadow-md shadow-blue-500/20 transition hover:opacity-90"
+            disabled={isSaving}
+            className="w-full rounded-2xl bg-[#0B5FFF] px-6 py-3 font-semibold text-white shadow-md shadow-blue-500/20 transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            Save Class
+            {isSaving ? "Checking..." : "Save Class"}
           </button>
 
+          {/* Info Box */}
           <div className="w-full rounded-2xl border border-red-100 bg-red-50/70 px-4 py-3 text-sm text-[#475569] dark:border-red-400/20 dark:bg-red-500/10 dark:text-slate-300">
-            Room values will be stored in uppercase for consistency.
+            Only classrooms that exist in Firebase can be saved.
           </div>
         </div>
       </form>
