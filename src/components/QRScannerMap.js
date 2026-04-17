@@ -1,349 +1,90 @@
-// // "use client";
+"use client"; // Enables client-side rendering (needed for camera + browser APIs)
 
-// // import { useEffect, useRef, useState } from "react";
-// // import { places } from "@/data/places";
-
-// // export default function QRScannerMap() {
-// //   const [scannerOn, setScannerOn] = useState(false);
-// //   const [selectedPlace, setSelectedPlace] = useState(null);
-// //   const [error, setError] = useState("");
-// //   const readerRef = useRef(null);
-
-// //   const startScanner = async () => {
-// //     setError("");
-
-// //     if (typeof window === "undefined") return;
-
-// //     const { Html5Qrcode } = await import("html5-qrcode");
-
-// //     if (!readerRef.current) {
-// //       readerRef.current = new Html5Qrcode("camera");
-// //     }
-
-// //     try {
-// //       await readerRef.current.start(
-// //         { facingMode: "environment" },
-// //         { fps: 10, qrbox: 250 },
-// //         (decodedText) => {
-// //           const trimmedText = decodedText.trim();
-// //           const place = places[trimmedText];
-
-// //           if (place) {
-// //             setSelectedPlace(place);
-// //             setScannerOn(false);
-// //             stopScanner();
-// //           } else {
-// //             console.error("Invalid QR code:", decodedText);
-// //             setError(`Invalid QR code: ${decodedText}`);
-// //           }
-// //         }
-// //       );
-// //     } catch (err) {
-// //       console.error("Error starting QR code scanner:", err);
-// //       setError("Could not start scanner.");
-// //       setScannerOn(false);
-// //     }
-// //   };
-
-// //   const stopScanner = async () => {
-// //     try {
-// //       if (readerRef.current?.isScanning) {
-// //         await readerRef.current.stop();
-// //         await readerRef.current.clear();
-// //       }
-// //     } catch (err) {
-// //       console.error("Error stopping scanner:", err);
-// //     }
-// //   };
-
-// //   const toggleScanner = async () => {
-// //     if (!scannerOn) {
-// //       setScannerOn(true);
-// //       await startScanner();
-// //     } else {
-// //       setScannerOn(false);
-// //       await stopScanner();
-// //     }
-// //   };
-
-// //   useEffect(() => {
-// //     return () => {
-// //       stopScanner();
-// //     };
-// //   }, []);
-
-// //   return (
-// //     <div className="flex min-h-screen flex-col items-center gap-6 bg-white px-4 py-8">
-// //       <h1 className="text-3xl font-bold">QR Code Scanner</h1>
-
-// //       <div className="relative w-full max-w-3xl overflow-hidden rounded-2xl border border-gray-300 shadow-lg">
-// //         <img
-// //           src="/image/testplan.jpeg"
-// //           alt="Indoor map"
-// //           className="h-auto w-full object-contain"
-// //         />
-
-// //         {selectedPlace && (
-// //           <div
-// //             className="absolute h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-red-600 shadow-md"
-// //             style={{
-// //               top: `${selectedPlace.top * 100}%`,
-// //               left: `${selectedPlace.left * 100}%`,
-// //             }}
-// //             title={selectedPlace.info}
-// //           />
-// //         )}
-// //       </div>
-
-// //       {selectedPlace && (
-// //         <div className="rounded-xl bg-gray-100 px-4 py-3 text-center shadow-sm">
-// //           <p className="text-lg font-semibold">{selectedPlace.info}</p>
-// //           <p className="text-sm text-gray-600">
-// //             Top: {selectedPlace.top}, Left: {selectedPlace.left}
-// //           </p>
-// //         </div>
-// //       )}
-
-// //       <div
-// //         id="camera"
-// //         className={`w-full max-w-md overflow-hidden rounded-2xl border border-gray-300 ${
-// //           scannerOn ? "block" : "hidden"
-// //         }`}
-// //       />
-
-// //       <button
-// //         onClick={toggleScanner}
-// //         className="rounded-xl bg-black px-6 py-3 text-white transition hover:opacity-90"
-// //       >
-// //         {scannerOn ? "Cancel" : "Scan"}
-// //       </button>
-
-// //       {error && (
-// //         <p className="rounded-lg bg-red-50 px-4 py-2 text-sm text-red-600">
-// //           {error}
-// //         </p>
-// //       )}
-// //     </div>
-// //   );
-// // }
-
-
-
-// "use client";
-
-// import { useEffect, useRef, useState } from "react";
-// import { useRouter } from "next/navigation";
-// import { places } from "../data/places";
-// import { useNavio } from "../contexts/NavioContext";
-
-// export default function QRScannerMap() {
-//   const [scannerOn, setScannerOn] = useState(false);
-//   const [selectedPlace, setSelectedPlace] = useState(null);
-//   const [error, setError] = useState("");
-//   const readerRef = useRef(null);
-
-//   const router = useRouter();
-//   const { setSelectedReferencePoint, selectedSavedClass, selectedRoom } = useNavio();
-
-//   const startScanner = async () => {
-//     setError("");
-
-//     if (typeof window === "undefined") return;
-
-//     const { Html5Qrcode } = await import("html5-qrcode");
-
-//     if (!readerRef.current) {
-//       readerRef.current = new Html5Qrcode("camera");
-//     }
-
-//     try {
-//       await readerRef.current.start(
-//         { facingMode: "environment" },
-//         { fps: 10, qrbox: 250 },
-//         async (decodedText) => {
-//           const trimmedText = decodedText.trim();
-//           const place = places[trimmedText];
-
-//           if (place) {
-//             setSelectedPlace(place);
-//             setSelectedReferencePoint(place);
-//             setScannerOn(false);
-//             await stopScanner();
-//           } else {
-//             console.error("Invalid QR code:", decodedText);
-//             setError(`Invalid QR code: ${decodedText}`);
-//           }
-//         }
-//       );
-//     } catch (err) {
-//       console.error("Error starting QR code scanner:", err);
-//       setError("Could not start scanner.");
-//       setScannerOn(false);
-//     }
-//   };
-
-//   const stopScanner = async () => {
-//     try {
-//       if (readerRef.current?.isScanning) {
-//         await readerRef.current.stop();
-//         await readerRef.current.clear();
-//       }
-//     } catch (err) {
-//       console.error("Error stopping scanner:", err);
-//     }
-//   };
-
-//   const toggleScanner = async () => {
-//     if (!scannerOn) {
-//       setScannerOn(true);
-//       await startScanner();
-//     } else {
-//       setScannerOn(false);
-//       await stopScanner();
-//     }
-//   };
-
-//   const handleContinue = () => {
-//     if (!selectedPlace) return;
-
-//     if (selectedSavedClass || selectedRoom) {
-//       router.push("/route-result");
-//     } else {
-//       router.push("/search-room");
-//     }
-//   };
-
-//   useEffect(() => {
-//     return () => {
-//       stopScanner();
-//     };
-//   }, []);
-
-//   return (
-//     <div className="flex min-h-screen flex-col items-center gap-6 bg-white px-4 py-8 dark:bg-slate-800 dark:text-white">
-//       <h1 className="text-3xl font-bold text-center">QR Code Scanner</h1>
-
-//       <p className="max-w-2xl text-center text-sm sm:text-base text-slate-600 dark:text-slate-300">
-//         Scan your Navio reference point QR code to identify your current location
-//         on the floor plan.
-//       </p>
-
-//       <div className="relative w-full max-w-3xl overflow-hidden rounded-2xl border border-gray-300 shadow-lg dark:border-slate-600">
-//         <img
-//           src="/image/testplan.jpeg"
-//           alt="Indoor map"
-//           className="h-auto w-full object-contain"
-//         />
-
-//         {selectedPlace && (
-//           <div
-//             className="absolute h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-red-600 shadow-md"
-//             style={{
-//               top: `${selectedPlace.top * 100}%`,
-//               left: `${selectedPlace.left * 100}%`,
-//             }}
-//             title={selectedPlace.info}
-//           />
-//         )}
-//       </div>
-
-//       {selectedPlace && (
-//         <div className="rounded-xl bg-gray-100 px-4 py-3 text-center shadow-sm dark:bg-slate-700">
-//           <p className="text-lg font-semibold">{selectedPlace.info}</p>
-//           <p className="text-sm text-gray-600 dark:text-slate-300">
-//             Reference point detected successfully.
-//           </p>
-//         </div>
-//       )}
-
-//       <div
-//         id="camera"
-//         className={`w-full max-w-md overflow-hidden rounded-2xl border border-gray-300 dark:border-slate-600 ${
-//           scannerOn ? "block" : "hidden"
-//         }`}
-//       />
-
-//       <div className="flex w-full max-w-md flex-col gap-3 sm:flex-row">
-//         <button
-//           onClick={toggleScanner}
-//           className="w-full rounded-xl bg-black px-6 py-3 text-white transition hover:opacity-90 dark:bg-teal-600 dark:hover:bg-teal-500"
-//         >
-//           {scannerOn ? "Cancel" : "Scan"}
-//         </button>
-
-//         <button
-//           onClick={handleContinue}
-//           disabled={!selectedPlace}
-//           className="w-full rounded-xl bg-pink-600 px-6 py-3 text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
-//         >
-//           Continue
-//         </button>
-//       </div>
-
-//       {error && (
-//         <p className="rounded-lg bg-red-50 px-4 py-2 text-sm text-red-600 dark:bg-red-900/30 dark:text-red-300">
-//           {error}
-//         </p>
-//       )}
-//     </div>
-//   );
-// }
-
-
-
-"use client";
-
+// React hooks for state, lifecycle, and persistent references
 import { useEffect, useRef, useState } from "react";
+
+// Router for page navigation
 import { useRouter } from "next/navigation";
+
+// Static QR → location mapping
 import { places } from "../data/places";
+
+// Global navigation context
 import { useNavio } from "../contexts/NavioContext";
 
+// Main QR Scanner + Map Component
 export default function QRScannerMap() {
+
+  // Controls whether scanner is ON or OFF
   const [scannerOn, setScannerOn] = useState(false);
+
+  // Stores detected place after scanning QR
   const [selectedPlace, setSelectedPlace] = useState(null);
+
+  // Stores error messages (invalid QR, scanner issues)
   const [error, setError] = useState("");
+
+  // Reference to QR scanner instance
   const readerRef = useRef(null);
 
+  // Router instance for navigation
   const router = useRouter();
+
+  // Context values for navigation flow
   const { setSelectedReferencePoint, selectedSavedClass, selectedRoom } = useNavio();
 
+  // Starts QR scanner using camera
   const startScanner = async () => {
-    setError("");
+    setError(""); // Clear previous errors
 
+    // Prevent execution on server
     if (typeof window === "undefined") return;
 
+    // Dynamically import QR library
     const { Html5Qrcode } = await import("html5-qrcode");
 
+    // Initialize scanner if not already created
     if (!readerRef.current) {
       readerRef.current = new Html5Qrcode("camera");
     }
 
     try {
+      // Start scanning
       await readerRef.current.start(
-        { facingMode: "environment" },
-        { fps: 10, qrbox: 250 },
+        { facingMode: "environment" }, // Use back camera
+        { fps: 10, qrbox: 250 }, // Scanner settings
+
+        // Callback when QR is scanned
         async (decodedText) => {
           const trimmedText = decodedText.trim();
+
+          // Match scanned value with places data
           const place = places[trimmedText];
 
           if (place) {
+            // Valid QR → update state + context
             setSelectedPlace(place);
             setSelectedReferencePoint(place);
+
+            // Stop scanner after success
             setScannerOn(false);
             await stopScanner();
           } else {
+            // Invalid QR → show error
             console.error("Invalid QR code:", decodedText);
             setError(`Invalid QR code: ${decodedText}`);
           }
         }
       );
     } catch (err) {
+      // Handle scanner errors
       console.error("Error starting QR code scanner:", err);
       setError("Could not start scanner.");
       setScannerOn(false);
     }
   };
 
+  // Stops and clears scanner safely
   const stopScanner = async () => {
     try {
       if (readerRef.current?.isScanning) {
@@ -355,6 +96,7 @@ export default function QRScannerMap() {
     }
   };
 
+  // Toggle scanner ON/OFF
   const toggleScanner = async () => {
     if (!scannerOn) {
       setScannerOn(true);
@@ -365,16 +107,20 @@ export default function QRScannerMap() {
     }
   };
 
+  // Controls navigation after scanning
   const handleContinue = () => {
     if (!selectedPlace) return;
 
+    // If destination already exists → go to route result
     if (selectedSavedClass || selectedRoom) {
       router.push("/route-result");
     } else {
+      // Otherwise → go to search page
       router.push("/search-room");
     }
   };
 
+  // Cleanup: stop scanner when component unmounts
   useEffect(() => {
     return () => {
       stopScanner();
@@ -382,7 +128,10 @@ export default function QRScannerMap() {
   }, []);
 
   return (
+    // Main UI layout
     <main className="space-y-8">
+
+      {/* Header Section */}
       <section className="rounded-[28px] border border-[#E2E8F0] bg-white p-8 shadow-lg dark:border-[#334155] dark:bg-[#1E293B]">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
@@ -400,6 +149,7 @@ export default function QRScannerMap() {
             </p>
           </div>
 
+          {/* Info box */}
           <div className="rounded-2xl border border-blue-100 bg-blue-50/70 px-5 py-4 dark:border-blue-400/20 dark:bg-blue-500/10">
             <p className="text-sm font-semibold text-[#0B5FFF] dark:text-blue-300">
               Scanner flow
@@ -411,8 +161,11 @@ export default function QRScannerMap() {
         </div>
       </section>
 
+      {/* Main grid layout */}
       <section className="grid gap-6 lg:grid-cols-[1.25fr_0.75fr]">
         <div className="space-y-6">
+
+          {/* Floor plan section */}
           <div className="overflow-hidden rounded-[28px] border border-[#E2E8F0] bg-white shadow-lg dark:border-[#334155] dark:bg-[#1E293B]">
             <div className="border-b border-[#E2E8F0] px-6 py-4 dark:border-[#334155]">
               <h2 className="text-xl font-bold tracking-tight">Floor Plan</h2>
@@ -429,6 +182,7 @@ export default function QRScannerMap() {
                   className="h-auto w-full object-contain"
                 />
 
+                {/* Marker shown when location detected */}
                 {selectedPlace && (
                   <div
                     className="absolute h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-[#E11D48] shadow-[0_0_0_6px_rgba(225,29,72,0.18)]"
@@ -443,6 +197,7 @@ export default function QRScannerMap() {
             </div>
           </div>
 
+          {/* Camera scanner container */}
           <div
             id="camera"
             className={`overflow-hidden rounded-[28px] border border-[#E2E8F0] bg-white shadow-lg dark:border-[#334155] dark:bg-[#1E293B] ${
@@ -457,6 +212,7 @@ export default function QRScannerMap() {
             </div>
           </div>
 
+          {/* Action buttons */}
           <div className="grid gap-3 sm:grid-cols-2">
             <button
               onClick={toggleScanner}
@@ -476,6 +232,8 @@ export default function QRScannerMap() {
         </div>
 
         <div className="space-y-6">
+
+          {/* Conditional UI: location detected */}
           {selectedPlace ? (
             <div className="rounded-[28px] border border-[#E2E8F0] bg-white p-6 shadow-lg dark:border-[#334155] dark:bg-[#1E293B]">
               <div className="mb-5 flex items-center gap-3">
@@ -500,6 +258,8 @@ export default function QRScannerMap() {
               </div>
             </div>
           ) : (
+
+            // Instructions before scanning
             <div className="rounded-[28px] border border-[#E2E8F0] bg-white p-6 shadow-lg dark:border-[#334155] dark:bg-[#1E293B]">
               <h2 className="text-xl font-bold tracking-tight">Before you scan</h2>
 
@@ -534,6 +294,7 @@ export default function QRScannerMap() {
             </div>
           )}
 
+          {/* Error display */}
           {error && (
             <div className="rounded-[28px] border border-red-200 bg-red-50 p-6 shadow-lg dark:border-red-500/20 dark:bg-red-500/10">
               <div className="mb-3 flex items-center gap-3">

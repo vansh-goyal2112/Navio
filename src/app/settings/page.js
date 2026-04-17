@@ -1,30 +1,64 @@
-"use client";
+"use client"; // Enables client-side rendering for this Next.js page
 
+// Import theme context to manage light/dark mode
 import { useTheme } from "../../contexts/ThemeContext";
+
+// Import authentication context for user session handling
 import { useUserAuth } from "../../contexts/AuthContext";
 
+/**
+ * SettingsPage Component
+ * --------------------------------------------------
+ * Purpose:
+ * - Allows users to control UI appearance (dark/light mode)
+ * - Provides logout functionality
+ * - Displays account/session management options
+ * - Restricts access if user is not authenticated
+ */
 export default function SettingsPage() {
+
+  // Get theme state and toggle function
   const { darkMode, toggleDarkMode } = useTheme();
+
+  // Get authenticated user and logout function
   const { user, firebaseSignOut } = useUserAuth();
 
+  /**
+   * handleLogout
+   * --------------------------------------------------
+   * Logs the user out using Firebase authentication
+   * Includes error handling for safety
+   */
   const handleLogout = async () => {
     try {
       await firebaseSignOut();
     } catch (error) {
+      // Log error for debugging purposes
       console.error("Logout Error:", error);
     }
   };
 
+  /**
+   * Access Control
+   * --------------------------------------------------
+   * If user is not logged in:
+   * - Show access denied UI
+   * - Prevent access to settings page
+   */
   if (user === null) {
     return (
       <main className="flex items-center justify-center py-16">
         <div className="w-full max-w-md rounded-3xl border border-[#E2E8F0] bg-white p-10 text-center shadow-xl dark:border-[#334155] dark:bg-[#1E293B]">
+          
+          {/* Access Denied Icon */}
           <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-red-50 text-3xl dark:bg-red-500/10">
             🚫
           </div>
 
+          {/* Heading */}
           <h1 className="mb-3 text-3xl font-bold tracking-tight">Access Denied</h1>
 
+          {/* Message */}
           <p className="text-[#475569] dark:text-slate-300">
             You must be logged in to view settings.
           </p>
@@ -33,10 +67,25 @@ export default function SettingsPage() {
     );
   }
 
+  /**
+   * Main UI (Authenticated Users Only)
+   * --------------------------------------------------
+   * Sections:
+   * 1. Header (page title + description)
+   * 2. Appearance settings (theme toggle)
+   * 3. Account settings (logout)
+   * 4. Info panels (summary + status)
+   */
   return (
     <main className="space-y-8">
+
+      {/* HEADER SECTION */}
+      {/* Displays page title and description */}
       <section className="rounded-[28px] border border-[#E2E8F0] bg-white p-8 shadow-lg dark:border-[#334155] dark:bg-[#1E293B]">
+        
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+          
+          {/* Left: Title + description */}
           <div>
             <span className="inline-block rounded-full bg-blue-50 px-4 py-1 text-xs font-semibold tracking-[0.2em] text-[#0B5FFF] dark:bg-blue-500/10 dark:text-blue-300">
               SETTINGS
@@ -52,6 +101,7 @@ export default function SettingsPage() {
             </p>
           </div>
 
+          {/* Info Box */}
           <div className="rounded-2xl border border-red-100 bg-red-50/70 px-5 py-4 dark:border-red-400/20 dark:bg-red-500/10">
             <p className="text-sm font-semibold text-[#E11D48] dark:text-red-300">
               Personal controls
@@ -63,14 +113,23 @@ export default function SettingsPage() {
         </div>
       </section>
 
+      {/* MAIN GRID */}
       <section className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+
+        {/* LEFT SIDE: SETTINGS CONTROLS */}
         <div className="space-y-6">
+
+          {/* APPEARANCE SECTION */}
           <div className="rounded-[28px] border border-[#E2E8F0] bg-white p-6 shadow-lg dark:border-[#334155] dark:bg-[#1E293B]">
+            
             <div className="mb-5 flex items-start gap-4">
+
+              {/* Icon */}
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-xl dark:bg-blue-500/10">
                 🎨
               </div>
 
+              {/* Text */}
               <div>
                 <h2 className="text-2xl font-bold tracking-tight">Appearance</h2>
                 <p className="mt-1 text-sm text-[#475569] dark:text-slate-300">
@@ -80,7 +139,10 @@ export default function SettingsPage() {
               </div>
             </div>
 
+            {/* Theme Control Box */}
             <div className="rounded-2xl border border-[#E2E8F0] bg-[#F8FAFC] p-5 dark:border-[#334155] dark:bg-[#0F172A]">
+              
+              {/* Current Theme */}
               <p className="text-sm font-semibold text-[#0B5FFF] dark:text-blue-300">
                 Active Theme
               </p>
@@ -88,6 +150,7 @@ export default function SettingsPage() {
                 {darkMode ? "Dark Mode" : "Light Mode"}
               </p>
 
+              {/* Toggle Button */}
               <button
                 onClick={toggleDarkMode}
                 className="mt-5 rounded-2xl bg-[#0B5FFF] px-6 py-3 font-semibold text-white shadow-md shadow-blue-500/20 transition hover:opacity-90"
@@ -97,12 +160,17 @@ export default function SettingsPage() {
             </div>
           </div>
 
+          {/* ACCOUNT SECTION */}
           <div className="rounded-[28px] border border-[#E2E8F0] bg-white p-6 shadow-lg dark:border-[#334155] dark:bg-[#1E293B]">
+            
             <div className="mb-5 flex items-start gap-4">
+
+              {/* Icon */}
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-red-50 text-xl dark:bg-red-500/10">
                 🔐
               </div>
 
+              {/* Text */}
               <div>
                 <h2 className="text-2xl font-bold tracking-tight">Account</h2>
                 <p className="mt-1 text-sm text-[#475569] dark:text-slate-300">
@@ -111,14 +179,18 @@ export default function SettingsPage() {
               </div>
             </div>
 
+            {/* Logout Box */}
             <div className="rounded-2xl border border-[#E2E8F0] bg-[#F8FAFC] p-5 dark:border-[#334155] dark:bg-[#0F172A]">
+              
               <p className="text-sm font-semibold text-[#E11D48] dark:text-red-300">
                 Sign Out
               </p>
+
               <p className="mt-2 text-sm leading-6 text-[#475569] dark:text-slate-300">
                 Use this option to safely log out of your Navio account.
               </p>
 
+              {/* Logout Button */}
               <button
                 onClick={handleLogout}
                 className="mt-5 rounded-2xl bg-[#E11D48] px-6 py-3 font-semibold text-white shadow-md shadow-red-500/20 transition hover:opacity-90"
@@ -129,19 +201,27 @@ export default function SettingsPage() {
           </div>
         </div>
 
+        {/* RIGHT SIDE: INFO PANELS */}
         <div className="space-y-6">
+
+          {/* SUMMARY */}
           <div className="rounded-[28px] border border-[#E2E8F0] bg-white p-6 shadow-lg dark:border-[#334155] dark:bg-[#1E293B]">
             <h2 className="text-xl font-bold tracking-tight">Settings Summary</h2>
+
             <p className="mt-3 text-sm leading-6 text-[#475569] dark:text-slate-300">
               This page gives users quick control over the visual appearance of
               Navio and their current logged-in session.
             </p>
           </div>
 
+          {/* STATUS */}
           <div className="rounded-[28px] border border-[#E2E8F0] bg-white p-6 shadow-lg dark:border-[#334155] dark:bg-[#1E293B]">
+            
             <h2 className="text-xl font-bold tracking-tight">Current Status</h2>
 
             <div className="mt-4 space-y-3">
+
+              {/* Theme Status */}
               <div className="rounded-2xl border border-blue-100 bg-blue-50/70 p-4 dark:border-blue-400/20 dark:bg-blue-500/10">
                 <p className="text-sm font-semibold text-[#0B5FFF] dark:text-blue-300">
                   Theme Control Enabled
@@ -151,6 +231,7 @@ export default function SettingsPage() {
                 </p>
               </div>
 
+              {/* Session Status */}
               <div className="rounded-2xl border border-red-100 bg-red-50/70 p-4 dark:border-red-400/20 dark:bg-red-500/10">
                 <p className="text-sm font-semibold text-[#E11D48] dark:text-red-300">
                   Session Management Ready
@@ -159,6 +240,7 @@ export default function SettingsPage() {
                   Your logout action is available directly from this page.
                 </p>
               </div>
+
             </div>
           </div>
         </div>
